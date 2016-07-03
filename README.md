@@ -1,6 +1,6 @@
-Blank Node.js IoT App
+Komfi Node.js IoT App
 ============================
-The Blank Node.js sample application distributed within Intel® XDK IoT Edition under the Internet of Things  project creation option.
+The Komfi Node.js uses the sample blank application template distributed within Intel® XDK IoT Edition under the Internet of Things  project creation option.
 
 Intel(R) XDK IoT Edition
 -------------------------------------------
