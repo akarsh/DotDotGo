@@ -52,16 +52,49 @@ var sensorObj = require('jsupm_loudness');
 
 // Instantiate a Loudness sensor on analog pin A1, with an analog
 // reference voltage of 5.0
-var sensor = new sensorObj.Loudness(1, 5.0);
+var sensor = new sensorObj.Loudness(1, 5.0),    
+    screenily = new (require("jsupm_i2clcd").Jhd1313m1)(6, 0x3E, 0x62);
+
+//Display a message on the I2C LCD display
+function Lowy() {
+  screenly.setCursor(0, 0);
+  screenly.write("Low          ");
+  screenly.setColor(0, 255, 0);
+}
+
+// Display a message on the I2C LCD display
+function normaly() {
+  screenly.setCursor(0, 0);
+  screenly.write("Normal       ");
+  screenly.setColor(0, 0, 255);
+}
+
+// Display a message on the I2C LCD display
+function Highy() {
+  screenly.setCursor(0, 0);
+  screenly.write("High        ");
+  screenly.setColor(255, 0, 0);
+}
 
 // Every tenth of a second, sample the loudness and output it's
 // corresponding analog voltage. 
 setInterval(function()
 {
     if (sensor.loudness() >= 1) {
-//        console.log("Detected loudness: " + sensor.loudness() + " volts");    
-    }
-}, 100);
+        console.log("Detected loudness: " + sensor.loudness() + " volts"); 
+        Highy();
+        }
+    else if(sensor.loudness() < 1) {
+        console.log("Detected loudness: " + sensor.loudness() + " volts"); 
+        Lowy();
+        }
+    else
+        {
+        console.log("Detected loudness: " + sensor.loudness() + " volts"); 
+        normaly();
+        }
+    
+}, 1000);
 
 // exit on ^C
 process.on('SIGINT', function()
